@@ -32,6 +32,13 @@ author:
     organization: Phoenix R&D
     email: ietf@raphaelrobert.com
 
+contributor:
+
+-
+    name: Russ Housley
+    organization: Vigil Security
+    email: housley@vigilsec.com
+
 normative:
 
 informative:
