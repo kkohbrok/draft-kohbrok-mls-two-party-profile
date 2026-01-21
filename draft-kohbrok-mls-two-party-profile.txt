@@ -74,6 +74,7 @@ Table of Contents
    6.  Security Considerations
    7.  IANA Considerations
    Acknowledgments
+   Contributors
    Authors' Addresses
 
 1.  Introduction
@@ -225,6 +226,13 @@ Table of Contents
 Acknowledgments
 
    TODO acknowledge.
+
+Contributors
+
+   Russ Housley
+   Vigil Security
+   Email: housley@vigilsec.com
+
 
 Authors' Addresses
 
