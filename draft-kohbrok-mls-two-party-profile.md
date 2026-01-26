@@ -59,6 +59,16 @@ protocol. This document explores the special case of groups of two and thus
 MLS's use as a (non-group) continuous key agreement protocol with a focus on the
 use in synchronous scenarios.
 
+Such a two-party version of MLS can be used to facilitate continuous key
+agreement, for example, for a secure channel. As such, it may represent an
+upgrade over any previous protocol that either doesn't allow for key updates or
+has not upgrade path towards post-quantum security.
+
+TODO: For now, this document specifies a simple two party profile based on
+vanilla MLS that assumes synchronous communication. In the future, we should add
+a more specialized version that trims unnecessary things like signatures in key
+update messages.
+
 # Protocol overview
 
 The synchronous case assumes that both parties are online and responsive. One
