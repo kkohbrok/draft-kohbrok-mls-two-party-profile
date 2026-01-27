@@ -5,7 +5,7 @@
 Messaging Layer Security                                      K. Kohbrok
 Internet-Draft                                                 R. Robert
 Intended status: Informational                               Phoenix R&D
-Expires: 30 July 2026                                    26 January 2026
+Expires: 31 July 2026                                    27 January 2026
 
 
                       A two-party profile for MLS
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 July 2026.
+   This Internet-Draft will expire on 31 July 2026.
 
 Copyright Notice
 
@@ -161,7 +161,7 @@ Table of Contents
    } ConnectionUpdate
 
    struct {
-     uint32 epoch;
+     uint64 epoch;
    } EpochKeyUpdate
 
    After the initial key agreement phase, both parties can send an MLS
