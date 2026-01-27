@@ -135,7 +135,7 @@ struct {
 } ConnectionUpdate
 
 struct {
-  uint32 epoch;
+  uint64 epoch;
 } EpochKeyUpdate
 ~~~
 
