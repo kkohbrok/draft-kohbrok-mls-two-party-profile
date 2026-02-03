@@ -59,21 +59,21 @@ protocol. This document explores the special case of groups of two and thus
 MLS's use as a (non-group) continuous key agreement protocol with a focus on the
 use in synchronous scenarios.
 
-Such a two-party version of MLS can be used to facilitate continuous key
-agreement, for example, for a secure channel. As such, it may represent an
-upgrade over any previous protocol that either doesn't allow for key updates or
-has not upgrade path towards post-quantum security.
+The two-party profile of MLS described in this document can, for example, be
+used as a replacement for other key exchange protocols that don't provide
+post-compromise security and/or post-quantum security. This is the case with the
+key exchange components for many secure channel protocols today.
 
 TODO: For now, this document specifies a simple two party profile based on
-vanilla MLS that assumes synchronous communication. In the future, we should add
-a more specialized version that trims unnecessary things like signatures in key
-update messages.
+vanilla MLS that assumes synchronous communication. In the future, we should
+explore the asynchronous case and add a more specialized version that trims
+unnecessary things like signatures in key update messages, etc.
 
 # Protocol overview
 
-The synchronous case assumes that both parties are online and responsive. One
-party takes the initiator role and one the responder. The protocol can be split
-into three phases.
+The synchronous case assumes that both parties are online. The party sending the
+first message is the initiator and the other party the responder. The protocol
+can be split into three phases.
 
 1. Initial key agreement
 2. Continuous key agreement
@@ -84,17 +84,17 @@ shared key and thus enter Phase 2.
 
 In Phase 2, both parties can perform key-updates to achieve forward-secrecy (FS)
 and post-compromise security (PCS). To avoid de-synchronization, both parties
-have to await confirmation by the other party before they can perform another
-update. This phase continues until the connection between the parties is
-interrupted.
+have to await confirmation of each update by the other party before they can
+perform another one. This phase continues until the connection between the
+parties is interrupted.
 
 Phase 3 allows either party to resume the connection. During resumption,
 initiator and responder exchange messages to renew their key material before
 they (re-)enter Phase 2.
 
 While the synchronous two-party case is significantly simpler when it comes to
-the responsibilities of the delivery service, it still requires both parties to
-interface with an authentication service to validate both initial credentials
+the responsibilities of the MLS Delivery Service, it still requires both parties
+to interface with an Authentication Service to validate both initial credentials
 and any credential updates.
 
 # Initial key agreement
@@ -119,13 +119,13 @@ connection.
 The responder MUST interface with the AS to ensure that the credential in the
 KeyPackage is valid.
 
-The responder then locally creates a group and commits to an Add proposal
+The responder then locally creates an MLS group and commits to an Add proposal
 containing the initiator's KeyPackage. The responder sends the resulting Welcome
-back to the initiator as part of a ServerHello message.
+message back to the initiator as part of a ServerHello message.
 
 The initiator uses the Welcome to create its local group state. The initiator
-can then inspect the group state and MUST interface with the AS to ensure that
-the credential of the responder is valid.
+then inspects the group state and MUST interface with the AS to ensure that the
+credential of the responder is valid.
 
 # Continuous key agreement
 
