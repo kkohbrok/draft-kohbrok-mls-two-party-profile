@@ -5,7 +5,7 @@
 Messaging Layer Security                                      K. Kohbrok
 Internet-Draft                                                 R. Robert
 Intended status: Informational                               Phoenix R&D
-Expires: 31 July 2026                                    27 January 2026
+Expires: 7 August 2026                                   3 February 2026
 
 
                       A two-party profile for MLS
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 July 2026.
+   This Internet-Draft will expire on 7 August 2026.
 
 Copyright Notice
 
@@ -84,21 +84,22 @@ Table of Contents
    groups of two and thus MLS's use as a (non-group) continuous key
    agreement protocol with a focus on the use in synchronous scenarios.
 
-   Such a two-party version of MLS can be used to facilitate continuous
-   key agreement, for example, for a secure channel.  As such, it may
-   represent an upgrade over any previous protocol that either doesn't
-   allow for key updates or has not upgrade path towards post-quantum
-   security.
+   The two-party profile of MLS described in this document can, for
+   example, be used as a replacement for other key exchange protocols
+   that don't provide post-compromise security and/or post-quantum
+   security.  This is the case with the key exchange components for many
+   secure channel protocols today.
 
    TODO: For now, this document specifies a simple two party profile
    based on vanilla MLS that assumes synchronous communication.  In the
-   future, we should add a more specialized version that trims
-   unnecessary things like signatures in key update messages.
+   future, we should explore the asynchronous case and add a more
+   specialized version that trims unnecessary things like signatures in
+   key update messages, etc.
 
 2.  Protocol overview
 
-   The synchronous case assumes that both parties are online and
-   responsive.  One party takes the initiator role and one the
+   The synchronous case assumes that both parties are online.  The party
+   sending the first message is the initiator and the other party the
    responder.  The protocol can be split into three phases.
 
    1.  Initial key agreement
@@ -112,17 +113,18 @@ Table of Contents
 
    In Phase 2, both parties can perform key-updates to achieve forward-
    secrecy (FS) and post-compromise security (PCS).  To avoid de-
-   synchronization, both parties have to await confirmation by the other
-   party before they can perform another update.  This phase continues
-   until the connection between the parties is interrupted.
+   synchronization, both parties have to await confirmation of each
+   update by the other party before they can perform another one.  This
+   phase continues until the connection between the parties is
+   interrupted.
 
    Phase 3 allows either party to resume the connection.  During
    resumption, initiator and responder exchange messages to renew their
    key material before they (re-)enter Phase 2.
 
    While the synchronous two-party case is significantly simpler when it
-   comes to the responsibilities of the delivery service, it still
-   requires both parties to interface with an authentication service to
+   comes to the responsibilities of the MLS Delivery Service, it still
+   requires both parties to interface with an Authentication Service to
    validate both initial credentials and any credential updates.
 
 3.  Initial key agreement
@@ -145,14 +147,14 @@ Table of Contents
    The responder MUST interface with the AS to ensure that the
    credential in the KeyPackage is valid.
 
-   The responder then locally creates a group and commits to an Add
+   The responder then locally creates an MLS group and commits to an Add
    proposal containing the initiator's KeyPackage.  The responder sends
-   the resulting Welcome back to the initiator as part of a ServerHello
-   message.
+   the resulting Welcome message back to the initiator as part of a
+   ServerHello message.
 
    The initiator uses the Welcome to create its local group state.  The
-   initiator can then inspect the group state and MUST interface with
-   the AS to ensure that the credential of the responder is valid.
+   initiator then inspects the group state and MUST interface with the
+   AS to ensure that the credential of the responder is valid.
 
 4.  Continuous key agreement
 
