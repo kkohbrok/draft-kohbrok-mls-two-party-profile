@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>A two-party profile for MLS</title>
+<meta content="Konrad Kohbrok" name="author">
+<meta content="Raphael Robert" name="author">
+<meta content="
+       TODO Abstract 
+    " name="description">
+<meta content="xml2rfc 3.34.0" name="generator">
+<meta content="handshake" name="keyword">
+<meta content="key exchange" name="keyword">
+<meta content="draft-kohbrok-mls-two-party-profile-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.34.0
+    Python 3.14.5
+    ConfigArgParse 1.7.5
+    google-i18n-address 3.1.1
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.10.1
+    pycountry 24.6.1
+    PyYAML 6.0.3
+    requests 2.33.1
+    wcwidth 0.8.2
+-->
+<link href="draft-kohbrok-mls-two-party-profile.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1 {
+  &#title {
+    font-size: 32px;
+    line-height: 40px;
+    clear: both;
+    margin: 1.5em 0 0.2em;
+  }
+  &#rfcnum {
+    margin: 1.5em 0 0.2em;
+    & + h1#title {
+      margin: 0.2em 0;
+    }
+  }
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+  & code, & samp, & tt {
+    font-size: 16px;
+    line-height: 0;
+  }
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    margin: 0;
+    float: right;
+    clear: both;
+  }
+  & > *:nth-child(2) {
+    clear: both;
+    display: block;
+    border: none;
+  }
+}
+svg {
+  display: block;
+  /* font-family isn't space-separated, but =~ will have to do */
+  &[font-family~="monospace" i], & [font-family~="monospace" i] {
+    font-family: var(--font-mono);
+  }
+}
+.alignCenter {
+  margin: 1em 0;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+       support flexbox yet.
+    */
+    display: table;
+    margin: 0 auto;
+  }
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+      float: none;
+    }
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+
+  &:not(.dlNewline) > dt {
+    float: left;
+    margin-right: 2ch;
+    min-width: 8ch;
+  }
+  & > dd {
+    margin-bottom: .8em;
+    margin-left: var(--indent) !important; /* stupid element overrides */
+    min-height: 2ex;
+  }
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a {
+  text-decoration: none;
+  &[href] {
+    color: var(--link-color);
+    &:hover { text-decoration: underline; }
+    &.selfRef {
+      color: var(--text-color);
+      &:hover {
+        text-decoration: none;
+        background-color: var(--highlight-color);
+      }
+    }
+  }
+}
+.iref + a[href].internal {
+  color: var(--text-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+  & blockquote {
+    margin: 0.8em 0.4em 0.4em;
+  }
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) {
+    & p {
+      margin: -2px 0;
+      max-height: 0;
+      transition: max-height 2s ease, margin 0.5s ease 0.5s;
+      overflow: hidden;
+    }
+    &:hover p,
+    & h2:target ~ p {
+      margin: 0.5em 0;
+      max-height: 500px;
+      overflow: auto;
+    }
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  &.right { margin-left: auto; }
+  &.center { margin-left: auto; margin-right: auto; }
+  &.left { margin-right: auto; }
+  & .text-left { text-align: left; }
+  & .text-center { text-align: center; }
+  & .text-right { text-align: right; }
+  & caption {
+    margin: 0;
+    padding: 3px 0 3px 1em;
+  }
+  & p { margin: 0; }
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+  @media not print {
+    :hover > &, &:focus {
+      opacity: 1;
+    }
+    &[href]:hover {
+      color: var(--pilcrow-strong);
+      background-color: transparent;
+    }
+  }
+  @media print {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+  & .prepared {
+    float: right;
+  }
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses {
+    & > section {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    & > section > h2 {
+      column-span: all;
+    }
+    /* hack for break-inside: avoid-column */
+    & address {
+      display: inline-block;
+      break-inside: avoid-column;
+    }
+  }
+}
+
+/* Comments */
+.rfcEditorRemove {
+  & p:first-of-type {
+    font-style: italic;
+  }
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc {
+    & nav {
+      font-family: var(--font-title);
+      font-weight: 360;
+      & > ul { margin-bottom: 2em; }
+      & ul {
+        margin: 0 0 0 4px;
+        & :is(p, li) {
+          margin: 2px 0;
+        }
+      }
+    }
+    & a.toplink {
+      float: right;
+    }
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+    & h2 {
+      margin: 0;
+      padding: 2px 0 2px 6px;
+      padding-right: 1em;
+      font-size: 18px;
+      line-height: 24px;
+      min-width: 190px;
+      text-align: right;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      &::before { /* css hamburger */
+        float: right;
+        position: relative;
+        width: 1em;
+        height: 1px;
+        left: -164px;
+        margin: 8px 0 0 0;
+        background: white none repeat scroll 0 0;
+        box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+        content: "";
+      }
+    }
+    & nav {
+      display: none;
+      background-color: var(--background-color);
+      padding: 0.5em 1em 1em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      height: calc(100vh - 48px);
+      border-left: 1px solid #ddd;
+    }
+    &.active {
+      opacity: 1;
+      & nav { display: block; }
+    }
+    /* Make the collapsed ToC header render white on gray also when it's a link */
+    & h2 a,
+    & h2 a:is(:link, :focus, :hover),
+    & a.toplink,
+    & a.toplink:hover {
+      color: white;
+      background-color: #444;
+      text-decoration: none;
+    }
+    & a.toplink {
+      margin: 2px 0.5em 0;
+    }
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    & h2 {
+      margin: 0;
+      padding: 0.25em 1em 1em 0;
+    }
+    & nav {
+      display: block;
+      height: calc(90vh - 84px);
+      bottom: 0;
+      padding: 0.5em 0 2em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    & a.toplink {
+      margin: 8px 0.5em 0;
+    }
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc {
+    page-break-before: always;
+    border-top: none;
+    padding-top: 0;
+  }
+  #n-introduction {
+    page-break-before: always;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg {
+  & :is([stroke="black"], [stroke^="#000"]) {
+    stroke: var(--text-color);
+  }
+  & :is([stroke="white"], [stroke^="#fff"]) {
+    stroke: var(--background-color);
+  }
+  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+    fill: var(--text-color);
+  }
+  & :is([fill="white"], [fill^="#fff"]) {
+    fill: var(--background-color);
+  }
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">2PMLS</td>
+<td class="right">July 2026</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Kohbrok &amp; Robert</td>
+<td class="center">Expires 31 January 2027</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Messaging Layer Security</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-kohbrok-mls-two-party-profile-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2026-07-30" class="published">30 July 2026</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2027-01-31">31 January 2027</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">K. Kohbrok</div>
+<div class="org">Phoenix R&amp;D</div>
+</div>
+<div class="author">
+      <div class="author-name">R. Robert</div>
+<div class="org">Phoenix R&amp;D</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">A two-party profile for MLS</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://kkohbrok.github.io/draft-kohbrok-mls-two-party-profile/draft-kohbrok-mls-two-party-profile.html">https://kkohbrok.github.io/draft-kohbrok-mls-two-party-profile/draft-kohbrok-mls-two-party-profile.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-kohbrok-mls-two-party-profile/">https://datatracker.ietf.org/doc/draft-kohbrok-mls-two-party-profile/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">
+        Discussion of this document takes place on the
+        Messaging Layer Security Working Group mailing list (<span><a href="mailto:mls@ietf.org">mailto:mls@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/mls/">https://mailarchive.ietf.org/arch/browse/mls/</a></span>.
+        Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/mls/">https://www.ietf.org/mailman/listinfo/mls/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/kkohbrok/draft-kohbrok-mls-two-party-profile">https://github.com/kkohbrok/draft-kohbrok-mls-two-party-profile</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 31 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2026 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-two-party-profile-component" class="internal xref">Two-party profile component</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-protocol-overview" class="internal xref">Protocol overview</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-protocol-states-and-error-h" class="internal xref">Protocol states and error handling</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-initial-key-agreement" class="internal xref">Initial key agreement</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-continuous-key-agreement" class="internal xref">Continuous key agreement</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-resumption" class="internal xref">Resumption</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-epochkeyupdate-authenticati" class="internal xref">EpochKeyUpdate authentication</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-protocol-state-machine" class="internal xref">Protocol state machine</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-contributors" class="internal xref">Contributors</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">Messaging Layer Security (MLS) <span>[<a href="#RFC9420" class="cite xref">RFC9420</a>]</span> is primarily designed to be a
+continuous group key agreement (and messaging) protocol. This document explores
+the special case of groups of two and thus MLS's use as a (non-group) continuous
+key agreement protocol with a focus on the use in synchronous scenarios.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The two-party profile of MLS described in this document can, for example, be
+used as a replacement for other key exchange protocols that don't provide
+post-compromise security and/or post-quantum security. Post-quantum security is
+available when the profile is used with a suitable post-quantum cipher suite,
+such as one defined in <span>[<a href="#I-D.ietf-mls-pq-ciphersuites" class="cite xref">I-D.ietf-mls-pq-ciphersuites</a>]</span>. This is the case with
+the key exchange components for many secure channel protocols today.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">TODO: For now, this document specifies a simple two party profile based on
+vanilla MLS that assumes synchronous communication and a reliable transport. In
+the future, we should explore the asynchronous case and add a more specialized
+version that trims unnecessary things like signatures in key update messages,
+etc.<a href="#section-1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="conventions-and-definitions">
+<section id="section-2">
+      <h2 id="name-conventions-and-definitions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      </h2>
+<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">This document uses the TLS presentation language as modified by <span><a href="https://rfc-editor.org/rfc/rfc9420#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC9420" class="cite xref">RFC9420</a>]</span> to describe the structure of protocol messages.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<div id="component">
+<section id="section-2.1">
+        <h3 id="name-two-party-profile-component">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-two-party-profile-component" class="section-name selfRef">Two-party profile component</a>
+        </h3>
+<p id="section-2.1-1">This document defines the <code>two_party_profile</code> application component using the
+Safe Application Interface of <span>[<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>. Its component ID is
+TBD1 (see <a href="#iana" class="auto internal xref">Section 8</a>). The component is used with Safe Additional Authenticated
+Data (AAD) and <span class="bcp14">MAY</span> be used with the safe exporter.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">An implementation using this profile <span class="bcp14">MUST</span> include the <code>two_party_profile</code>
+component ID in the <code>ComponentsList</code> values of both the <code>app_components</code> and
+<code>safe_aad</code> components in the <code>app_data_dictionary</code> extension of every LeafNode
+it uses with this profile. The group creator <span class="bcp14">MUST</span> include an
+<code>app_data_dictionary</code> extension in the GroupContext and <span class="bcp14">MUST</span> include the
+<code>two_party_profile</code> component ID in the <code>ComponentsList</code> values of both its
+<code>app_components</code> and <code>safe_aad</code> components.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">A client processing a KeyPackage for this profile <span class="bcp14">MUST</span> verify that its LeafNode
+advertises these component requirements. A client joining a group <span class="bcp14">MUST</span> verify
+that the GroupContext requires them. A member processing a Commit with an
+UpdatePath <span class="bcp14">MUST</span> verify that the UpdatePath LeafNode continues to advertise
+them.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">The following values identify the post-establishment messages defined by this
+profile:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<div class="lang-tls sourcecode" id="section-2.1-5">
+<pre>
+enum {
+  reserved(0),
+  connection_update(1),
+  resumption_request(2),
+  resumption_response(3),
+  epoch_key_update(4),
+  (255)
+} TwoPartyMessageType;
+</pre><a href="#section-2.1-5" class="pilcrow">¶</a>
+</div>
+<p id="section-2.1-6">Each MLSMessage created for a ConnectionUpdate, ResumptionRequest, or
+ResumptionResponse, as well as each EpochKeyUpdate application message, <span class="bcp14">MUST</span>
+contain a SafeAADItem for the <code>two_party_profile</code> component. The
+<code>aad_item_data</code> of that item <span class="bcp14">MUST</span> contain the TLS presentation language
+encoding of the TwoPartyMessageType value corresponding to the purpose for
+which the MLSMessage was created. A receiver <span class="bcp14">MUST</span> verify the value before
+processing the message. This allows a receiver to distinguish messages whose
+MLS payloads otherwise have the same encoding.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1-7">The message type is authenticated as part of the MLSMessage and identifies the
+purpose for which that MLSMessage was created. It <span class="bcp14">MUST NOT</span> be changed when a
+pending MLSMessage is retransmitted during resumption. <a href="#resumption" class="auto internal xref">Section 6</a> defines
+how this rule applies to a pending MLSMessage carried in a ResumptionRequest.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="protocol-overview">
+<section id="section-3">
+      <h2 id="name-protocol-overview">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-protocol-overview" class="section-name selfRef">Protocol overview</a>
+      </h2>
+<p id="section-3-1">The synchronous case assumes that both parties are online. The protocol
+additionally assumes that the underlying transport delivers messages reliably
+and in order while a connection is active, and that messages sent over an
+interrupted connection are no longer delivered once resumption of that
+connection has begun. How the parties detect an interruption is out of scope
+for this document and typically depends on the transport.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">The party sending the first message is the initiator and the other party the
+responder. The protocol can be split into three phases.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3-3">
+<li id="section-3-3.1">
+          <p id="section-3-3.1.1">Initial key agreement<a href="#section-3-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-3.2">
+          <p id="section-3-3.2.1">Continuous key agreement<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-3.3">
+          <p id="section-3-3.3.1">Resumption<a href="#section-3-3.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
+<p id="section-3-4">In Phase 1, the initiator and responder exchange messages until they agree on a
+shared key and thus enter Phase 2.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">In Phase 2, both parties can perform key-updates to achieve forward-secrecy (FS)
+and post-compromise security (PCS). To avoid de-synchronization, both parties
+have to await confirmation of each update by the other party before they can
+perform another one. This phase continues until the connection between the
+parties is interrupted.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">Phase 3 allows either party to resume the connection. During resumption,
+initiator and responder exchange messages to renew their key material before
+they (re-)enter Phase 2.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">The initiator and responder roles are assigned during Phase 1 and re-assigned
+whenever the connection is resumed in Phase 3. The roles assigned during Phase
+1 are additionally referred to as the initial initiator and the initial
+responder. Both parties <span class="bcp14">MUST</span> persist their initial role for the lifetime of
+the group, since it is used to resolve message collisions during resumption
+(see <a href="#resumption" class="auto internal xref">Section 6</a>).<a href="#section-3-7" class="pilcrow">¶</a></p>
+<p id="section-3-8">While the synchronous two-party case is significantly simpler when it comes to
+the responsibilities of the MLS Delivery Service, it still requires both parties
+to interface with an Authentication Service (AS) to validate both initial
+credentials and any credential updates.<a href="#section-3-8" class="pilcrow">¶</a></p>
+<p id="section-3-9">A higher-level protocol using this profile <span class="bcp14">MAY</span> export key material with the MLS
+exporter defined in <span><a href="https://rfc-editor.org/rfc/rfc9420#section-8.5" class="relref">Section 8.5</a> of [<a href="#RFC9420" class="cite xref">RFC9420</a>]</span> or with the safe exporter defined
+in <span>[<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>. The higher-level protocol is responsible for
+defining the exporter inputs and how the resulting key material is used. See
+<span><a href="https://rfc-editor.org/rfc/rfc9420#section-8.5" class="relref">Section 8.5</a> of [<a href="#RFC9420" class="cite xref">RFC9420</a>]</span> for guidance on the use of exported key material.<a href="#section-3-9" class="pilcrow">¶</a></p>
+<div id="protocol-states">
+<section id="section-3.1">
+        <h3 id="name-protocol-states-and-error-h">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-protocol-states-and-error-h" class="section-name selfRef">Protocol states and error handling</a>
+        </h3>
+<p id="section-3.1-1">At any point in the protocol, each party is in one of the following states:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3.1-2">
+          <dt id="section-3.1-2.1">Awaiting ClientHello:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.2">
+            <p id="section-3.1-2.2.1">The responder has accepted a connection and waits for a ClientHello. It has
+not yet created group state.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-2.3">Awaiting ServerHello:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.4">
+            <p id="section-3.1-2.4.1">The initiator has sent a ClientHello and waits for the corresponding
+ServerHello.<a href="#section-3.1-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-2.5">Synced:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.6">
+            <p id="section-3.1-2.6.1">The party has no pending commit and may send a new ConnectionUpdate. Its peer
+may still be in the previous epoch while waiting to receive an EpochKeyUpdate
+that this party sent.<a href="#section-3.1-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-2.7">Awaiting EpochKeyUpdate:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.8">
+            <p id="section-3.1-2.8.1">The party has sent a commit as part of a ConnectionUpdate or a
+ResumptionResponse and waits for the corresponding EpochKeyUpdate.<a href="#section-3.1-2.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-2.9">Awaiting ResumptionResponse:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.10">
+            <p id="section-3.1-2.10.1">The party has sent a ResumptionRequest and waits for the corresponding
+ResumptionResponse.<a href="#section-3.1-2.10.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-3.1-3"><a href="#initial-key-agreement" class="auto internal xref">Section 4</a>, <a href="#continuous-key-agreement" class="auto internal xref">Section 5</a>, and <a href="#resumption" class="auto internal xref">Section 6</a>
+define how a party in a given state processes each message. If a party
+receives a message that those sections do not explicitly permit in its current
+state, or if it fails to validate a received message, this is a fatal error.
+The party <span class="bcp14">MUST</span> terminate the connection and delete any group state associated
+with it. Group state discarded due to a fatal error <span class="bcp14">MUST NOT</span> be used for
+resumption. Communication can only be re-established through a new run of the
+initial key agreement.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-4"><a href="#state-machine" class="auto internal xref">Appendix A</a> shows the resulting state machine in graphical form.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="initial-key-agreement">
+<section id="section-4">
+      <h2 id="name-initial-key-agreement">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-initial-key-agreement" class="section-name selfRef">Initial key agreement</a>
+      </h2>
+<div class="lang-tls sourcecode" id="section-4-1">
+<pre>
+struct {
+  MLSMessage key_package;
+} ClientHello;
+
+struct {
+  MLSMessage welcome;
+} ServerHello;
+</pre><a href="#section-4-1" class="pilcrow">¶</a>
+</div>
+<p id="section-4-2">The initiator starts the key agreement part of the protocol by creating a
+KeyPackage and sending a ClientHello to the responder. It then enters the
+Awaiting ServerHello state, in which the ServerHello is the only permitted
+message.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">The responder starts in the Awaiting ClientHello state, in which the
+ClientHello is the only permitted message.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">The responder <span class="bcp14">MUST</span> validate the KeyPackage as specified in <span><a href="https://rfc-editor.org/rfc/rfc9420#section-10.1" class="relref">Section 10.1</a> of [<a href="#RFC9420" class="cite xref">RFC9420</a>]</span>. It <span class="bcp14">MUST</span> verify that the KeyPackage advertises the component
+requirements in <a href="#component" class="auto internal xref">Section 2.1</a>. It then checks whether it supports the offered
+cipher suite and whether the initiator has sufficient capabilities to support
+the connection.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">The responder <span class="bcp14">MUST</span> interface with the AS to ensure that the credential in the
+KeyPackage is valid.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">The responder then locally creates an MLS group and commits to an Add proposal
+containing the initiator's KeyPackage. The responder sends the resulting Welcome
+message back to the initiator as part of a ServerHello message and enters the
+Synced state.<a href="#section-4-6" class="pilcrow">¶</a></p>
+<p id="section-4-7">The initiator uses the Welcome to create its local group state. The initiator
+then inspects the group state. It <span class="bcp14">MUST</span> verify that the group contains exactly
+two non-blank leaves, that one leaf corresponds to the KeyPackage it sent, and
+that the other leaf belongs to the responder. It <span class="bcp14">MUST</span> also verify that the
+GroupContext contains the component requirements in <a href="#component" class="auto internal xref">Section 2.1</a> and interface
+with the AS to ensure that the credential of the responder is valid. The
+initiator then enters the Synced state.<a href="#section-4-7" class="pilcrow">¶</a></p>
+<p id="section-4-8">If the connection is interrupted before the initial key agreement completes,
+the parties <span class="bcp14">MUST</span> abandon the partial exchange and delete any group state
+created solely for it. Communication can only be re-established through a new
+run of the initial key agreement starting with a new ClientHello.<a href="#section-4-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="continuous-key-agreement">
+<section id="section-5">
+      <h2 id="name-continuous-key-agreement">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-continuous-key-agreement" class="section-name selfRef">Continuous key agreement</a>
+      </h2>
+<div class="lang-tls sourcecode" id="section-5-1">
+<pre>
+struct {
+  MLSMessage update;
+} ConnectionUpdate;
+
+struct {
+  uint64 epoch;
+} EpochKeyUpdate;
+</pre><a href="#section-5-1" class="pilcrow">¶</a>
+</div>
+<p id="section-5-2">An EpochKeyUpdate is encoded as the <code>application_data</code> of an MLS application
+message. The application message is sent in the new epoch and carries the
+<code>epoch_key_update</code> message type in Safe AAD as specified in <a href="#component" class="auto internal xref">Section 2.1</a>.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">After the initial key agreement phase, both parties can send an MLS commit with
+UpdatePath to update their key material. To ensure that both agree on the order
+of such commits and thus on the currently used key material, they must follow
+the following rules. The initiator and responder roles referenced in these
+rules are the current roles, i.e. the roles assigned during the most recent run
+of Phase 1 or Phase 3.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-4">Every Commit sent as part of a ConnectionUpdate, ResumptionRequest, or
+ResumptionResponse <span class="bcp14">MUST</span> contain an empty <code>proposals</code> vector and a populated
+UpdatePath. A receiver <span class="bcp14">MUST</span> reject a Commit that does not satisfy these
+requirements.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5-5.1">
+          <p id="section-5-5.1.1">A party in the Synced state <span class="bcp14">MAY</span> send a ConnectionUpdate containing a commit
+with UpdatePath. It then enters the Awaiting EpochKeyUpdate state.<a href="#section-5-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-5.2">
+          <p id="section-5-5.2.1">A party in the Synced state that receives a ConnectionUpdate <span class="bcp14">MUST</span> validate
+and apply the commit and respond with an EpochKeyUpdate, where <code>epoch</code> is the
+group's new epoch. It remains in the Synced state.<a href="#section-5-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-5.3">
+          <p id="section-5-5.3.1">If the initiator receives a ConnectionUpdate in the Awaiting EpochKeyUpdate
+state, it <span class="bcp14">MUST</span> ignore the ConnectionUpdate and remain in the Awaiting
+EpochKeyUpdate state.<a href="#section-5-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-5.4">
+          <p id="section-5-5.4.1">If the responder receives a ConnectionUpdate in the Awaiting EpochKeyUpdate
+state, it <span class="bcp14">MUST</span> drop its locally pending commit and then process the
+ConnectionUpdate as if it were in the Synced state. It thereby enters the
+Synced state.<a href="#section-5-5.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-5.5">
+          <p id="section-5-5.5.1">A party in the Awaiting EpochKeyUpdate state that receives an EpochKeyUpdate
+<span class="bcp14">MUST</span> decrypt and authenticate the application message using the group state
+resulting from its pending commit. It <span class="bcp14">MUST</span> check that the Safe AAD identifies
+an EpochKeyUpdate and that <code>epoch</code> matches the epoch created by its pending
+commit. If both checks succeed, the party <span class="bcp14">MUST</span> make that group state current
+and enter the Synced state. Otherwise, this is a fatal error (see
+<a href="#protocol-states" class="auto internal xref">Section 3.1</a>).<a href="#section-5-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-5.6">
+          <p id="section-5-5.6.1">A party that responds to a commit with an EpochKeyUpdate <span class="bcp14">MUST</span> start using the
+key material of the new epoch after sending the EpochKeyUpdate.<a href="#section-5-5.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-5-5.7">
+          <p id="section-5-5.7.1">A party that sends a commit <span class="bcp14">MUST</span> wait until it receives the corresponding
+EpochKeyUpdate before it starts using the key material of the new epoch.<a href="#section-5-5.7.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-5-6">In addition, a party in the Synced or Awaiting EpochKeyUpdate state may receive
+a ResumptionRequest at any time. Its processing is defined in <a href="#resumption" class="auto internal xref">Section 6</a>.<a href="#section-5-6" class="pilcrow">¶</a></p>
+<p id="section-5-7">OPEN QUESTION: How should we constrain the inclusion of commits? Some proposal
+types like Re-Init would need to be integrated into the state machine.<a href="#section-5-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="resumption">
+<section id="section-6">
+      <h2 id="name-resumption">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-resumption" class="section-name selfRef">Resumption</a>
+      </h2>
+<p id="section-6-1">Either party may resume a previously interrupted protocol session based on that
+session's group state. The party initiating the resumption becomes the
+initiator for the resumed session and the other party the responder. The
+initial roles (see <a href="#protocol-overview" class="auto internal xref">Section 3</a>) remain unchanged.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<div class="lang-tls sourcecode" id="section-6-2">
+<pre>
+struct {
+  MLSMessage commit;
+} ResumptionRequest;
+
+struct {
+  MLSMessage commit;
+} ResumptionResponse;
+</pre><a href="#section-6-2" class="pilcrow">¶</a>
+</div>
+<p id="section-6-3">The initiator creates a ResumptionRequest, sends it to the responder, and
+enters the Awaiting ResumptionResponse state. If the initiator has a pending
+commit, i.e. if it was in the Awaiting EpochKeyUpdate or Awaiting
+ResumptionResponse state when the connection was interrupted, the <code>commit</code>
+field <span class="bcp14">MUST</span> contain that pending commit. Otherwise, the <code>commit</code> field <span class="bcp14">MUST</span>
+contain a fresh commit with UpdatePath. A fresh commit carries the
+<code>resumption_request</code> message type in Safe AAD. A pending commit retains its
+original message type: <code>connection_update</code>, <code>resumption_request</code>, or
+<code>resumption_response</code>.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">The parties do not need to agree on whether the connection was interrupted: a
+party may receive a ResumptionRequest in the Synced, Awaiting EpochKeyUpdate,
+or Awaiting ResumptionResponse state. A party that receives a
+ResumptionRequest <span class="bcp14">MUST</span> treat the previous connection as interrupted and <span class="bcp14">MUST NOT</span> send any further messages over it.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">Before processing the commit in a ResumptionRequest in any state, a party <span class="bcp14">MUST</span>
+verify that its Safe AAD message type is <code>resumption_request</code>,
+<code>connection_update</code>, or <code>resumption_response</code>. The latter two values identify
+a pending ConnectionUpdate or ResumptionResponse retransmitted for resumption.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">A party that receives a ResumptionRequest in the Synced or Awaiting
+EpochKeyUpdate state <span class="bcp14">MUST</span> process the commit in the ResumptionRequest as
+follows:<a href="#section-6-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-7.1">
+          <p id="section-6-7.1.1">If the commit is identical to the last commit the receiver applied, the
+receiver <span class="bcp14">MUST NOT</span> apply it again and <span class="bcp14">MUST</span> drop its own pending commit, if
+it has one. This occurs when the connection was interrupted after the
+receiver applied the commit, but before the message confirming it reached
+the peer.<a href="#section-6-7.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-7.2">
+          <p id="section-6-7.2.1">If the receiver has a pending commit and the received commit builds on the
+epoch created by that pending commit, the receiver <span class="bcp14">MUST</span> first apply its
+pending commit and <span class="bcp14">MUST</span> then validate and apply the received commit. This
+occurs when the peer applied the receiver's pending commit, but the message
+confirming it was lost. The received commit only validates against a group
+state that includes the pending commit and thereby confirms it.<a href="#section-6-7.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-7.3">
+          <p id="section-6-7.3.1">Otherwise, the receiver <span class="bcp14">MUST</span> drop its pending commit, if it has one, and
+<span class="bcp14">MUST</span> validate and apply the received commit.<a href="#section-6-7.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-6-8">To recognize the first case, both parties <span class="bcp14">MUST</span> retain the last commit message
+they applied, or a collision-resistant hash of it.<a href="#section-6-8" class="pilcrow">¶</a></p>
+<p id="section-6-9">If a party receives a ResumptionRequest in the Awaiting ResumptionResponse
+state, it has a pending commit from its own ResumptionRequest. It <span class="bcp14">MUST</span> classify
+the received commit before resolving a collision:<a href="#section-6-9" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-10.1">
+          <p id="section-6-10.1.1">If the received commit is identical to the last commit the receiver applied,
+the receiver <span class="bcp14">MUST</span> process it according to the first rule above.<a href="#section-6-10.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-10.2">
+          <p id="section-6-10.2.1">If the received commit builds on the epoch created by the receiver's pending
+commit, the receiver <span class="bcp14">MUST</span> process it according to the second rule above.<a href="#section-6-10.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-10.3">
+          <p id="section-6-10.3.1">Otherwise, the receiver <span class="bcp14">MUST</span> verify that the received commit builds on its
+current epoch. If it does not, this is a fatal error. If it does, the
+received commit and the receiver's pending commit conflict. The receiver
+resolves the conflict based on its initial role:<a href="#section-6-10.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-10.3.2.1">
+              <p id="section-6-10.3.2.1.1">The initial initiator <span class="bcp14">MUST</span> ignore the received commit and remain in the
+Awaiting ResumptionResponse state.<a href="#section-6-10.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-6-10.3.2.2">
+              <p id="section-6-10.3.2.2.1">The initial responder <span class="bcp14">MUST</span> drop its pending commit and validate and apply
+the received commit.<a href="#section-6-10.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</li>
+      </ul>
+<p id="section-6-11">Whenever a receiver processes a ResumptionRequest rather than ignoring it, the
+receiver <span class="bcp14">MUST</span> create a fresh commit with UpdatePath, carrying the
+<code>resumption_response</code> message type in Safe AAD, and send it as part of a
+ResumptionResponse. Since this commit requires confirmation like any other, the
+receiver enters the Awaiting EpochKeyUpdate state and the rules of
+<a href="#continuous-key-agreement" class="auto internal xref">Section 5</a> apply from there.<a href="#section-6-11" class="pilcrow">¶</a></p>
+<p id="section-6-12">A party that receives a ResumptionResponse in the Awaiting ResumptionResponse
+state <span class="bcp14">MUST</span> first apply its pending commit, i.e. the commit it sent as part of
+its ResumptionRequest. It <span class="bcp14">MUST</span> then validate and apply the commit in the
+ResumptionResponse and respond with an EpochKeyUpdate, where <code>epoch</code> is the
+group's new epoch. It then enters the Synced state.<a href="#section-6-12" class="pilcrow">¶</a></p>
+<p id="section-6-13">As a result, if both parties initiate a resumption at the same time and their
+commits conflict, the resumed session continues with the initial initiator as
+the current initiator and the initial responder as the current responder.<a href="#section-6-13" class="pilcrow">¶</a></p>
+<p id="section-6-14">After ignoring a ResumptionRequest, the initial initiator may be waiting for a
+ResumptionResponse that never arrives, for example if its own ResumptionRequest
+or the corresponding ResumptionResponse was lost in a further interruption.
+Recovery from this situation relies on the initial initiator detecting the
+interruption and initiating resumption again.<a href="#section-6-14" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-7">
+      <h2 id="name-security-considerations">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-7-1">TODO: A future version of this document will provide a more complete security
+analysis.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div id="epochkeyupdate-authentication">
+<section id="section-7.1">
+        <h3 id="name-epochkeyupdate-authenticati">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-epochkeyupdate-authenticati" class="section-name selfRef">EpochKeyUpdate authentication</a>
+        </h3>
+<p id="section-7.1-1">An EpochKeyUpdate is an MLS application message sent under the new epoch's
+keys. Its Safe AAD identifies it as an EpochKeyUpdate for this profile. The
+sender of the Commit authenticates and decrypts the message using the group
+state resulting from its pending Commit before making that state current. This
+binds the acknowledgement to the new epoch and prevents a party that does not
+know the new epoch's keys from forging it.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="iana">
+<section id="section-8">
+      <h2 id="name-iana-considerations">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-8-1">IANA is requested to register the following entry in the "MLS Component
+Types" registry defined by <span>[<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>:<a href="#section-8-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-8-2">
+        <dt id="section-8-2.1">Value:</dt>
+        <dd style="margin-left: 1.5em" id="section-8-2.2">
+          <p id="section-8-2.2.1">TBD1<a href="#section-8-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-8-2.3">Name:</dt>
+        <dd style="margin-left: 1.5em" id="section-8-2.4">
+          <p id="section-8-2.4.1">two_party_profile<a href="#section-8-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-8-2.5">Where:</dt>
+        <dd style="margin-left: 1.5em" id="section-8-2.6">
+          <p id="section-8-2.6.1">AD, ES<a href="#section-8-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-8-2.7">Recommended:</dt>
+        <dd style="margin-left: 1.5em" id="section-8-2.8">
+          <p id="section-8-2.8.1">N<a href="#section-8-2.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="section-8-2.9">Reference:</dt>
+        <dd style="margin-left: 1.5em" id="section-8-2.10">
+          <p id="section-8-2.10.1">This document<a href="#section-8-2.10.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-9">
+      <h2 id="name-references">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-9.1">
+        <h3 id="name-normative-references">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-mls-extensions">[I-D.ietf-mls-extensions]</dt>
+        <dd>
+<span class="refAuthor">Robert, R.</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Extensions"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-extensions-10</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-10">https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-10</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9420">[RFC9420]</dt>
+      <dd>
+<span class="refAuthor">Barnes, R.</span>, <span class="refAuthor">Beurdouche, B.</span>, <span class="refAuthor">Robert, R.</span>, <span class="refAuthor">Millican, J.</span>, <span class="refAuthor">Omara, E.</span>, and <span class="refAuthor">K. Cohn-Gordon</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Protocol"</span>, <span class="seriesInfo">RFC 9420</span>, <span class="seriesInfo">DOI 10.17487/RFC9420</span>, <time datetime="2023-07" class="refDate">July 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9420">https://www.rfc-editor.org/rfc/rfc9420</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-9.2">
+        <h3 id="name-informative-references">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-mls-pq-ciphersuites">[I-D.ietf-mls-pq-ciphersuites]</dt>
+      <dd>
+<span class="refAuthor">Mahy, R.</span> and <span class="refAuthor">R. Barnes</span>, <span class="refTitle">"ML-KEM and Hybrid Cipher Suites for Messaging Layer Security"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-pq-ciphersuites-06</span>, <time datetime="2026-07-21" class="refDate">21 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-pq-ciphersuites-06">https://datatracker.ietf.org/doc/html/draft-ietf-mls-pq-ciphersuites-06</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="state-machine">
+<section id="appendix-A">
+      <h2 id="name-protocol-state-machine">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-protocol-state-machine" class="section-name selfRef">Protocol state machine</a>
+      </h2>
+<p id="appendix-A-1">This appendix shows the protocol as a state machine. It is informative. The
+normative rules are those in <a href="#initial-key-agreement" class="auto internal xref">Section 4</a>,
+<a href="#continuous-key-agreement" class="auto internal xref">Section 5</a>, and <a href="#resumption" class="auto internal xref">Section 6</a>. Transitions are labeled with
+the triggering event and, after a slash, the resulting actions. Transitions
+that only apply to the party holding a particular role are marked with that
+role in parentheses. Fatal errors (<a href="#protocol-states" class="auto internal xref">Section 3.1</a>) are omitted from the
+diagrams: in every state, receiving a message that no transition of that state
+covers terminates the connection.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2"><a href="#fig-establishment" class="auto internal xref">Figure 1</a> shows the initial key agreement
+(<a href="#initial-key-agreement" class="auto internal xref">Section 4</a>) and continuous key agreement
+(<a href="#continuous-key-agreement" class="auto internal xref">Section 5</a>) phases.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<span id="name-initial-and-continuous-key-"></span><div id="fig-establishment">
+<figure id="figure-1">
+        <div id="appendix-A-3.1">
+          <div class="alignLeft art-svg artwork" id="appendix-A-3.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="608" width="568" viewBox="0 0 568 608" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,128 L 8,176" fill="none" stroke="black"></path>
+              <path d="M 24,288 L 24,336" fill="none" stroke="black"></path>
+              <path d="M 24,496 L 24,544" fill="none" stroke="black"></path>
+              <path d="M 48,344 L 48,488" fill="none" stroke="black"></path>
+              <path d="M 88,64 L 88,120" fill="none" stroke="black"></path>
+              <path d="M 88,184 L 88,240" fill="none" stroke="black"></path>
+              <path d="M 176,128 L 176,176" fill="none" stroke="black"></path>
+              <path d="M 200,344 L 200,488" fill="none" stroke="black"></path>
+              <path d="M 216,48 L 216,64" fill="none" stroke="black"></path>
+              <path d="M 224,240 L 224,280" fill="none" stroke="black"></path>
+              <path d="M 296,128 L 296,176" fill="none" stroke="black"></path>
+              <path d="M 336,344 L 336,488" fill="none" stroke="black"></path>
+              <path d="M 376,64 L 376,120" fill="none" stroke="black"></path>
+              <path d="M 376,184 L 376,240" fill="none" stroke="black"></path>
+              <path d="M 440,288 L 440,336" fill="none" stroke="black"></path>
+              <path d="M 440,496 L 440,544" fill="none" stroke="black"></path>
+              <path d="M 464,128 L 464,176" fill="none" stroke="black"></path>
+              <path d="M 464,304 L 464,320" fill="none" stroke="black"></path>
+              <path d="M 464,512 L 464,528" fill="none" stroke="black"></path>
+              <path d="M 88,64 L 376,64" fill="none" stroke="black"></path>
+              <path d="M 8,128 L 176,128" fill="none" stroke="black"></path>
+              <path d="M 296,128 L 464,128" fill="none" stroke="black"></path>
+              <path d="M 8,176 L 176,176" fill="none" stroke="black"></path>
+              <path d="M 296,176 L 464,176" fill="none" stroke="black"></path>
+              <path d="M 88,240 L 376,240" fill="none" stroke="black"></path>
+              <path d="M 24,288 L 440,288" fill="none" stroke="black"></path>
+              <path d="M 448,304 L 464,304" fill="none" stroke="black"></path>
+              <path d="M 448,320 L 464,320" fill="none" stroke="black"></path>
+              <path d="M 24,336 L 440,336" fill="none" stroke="black"></path>
+              <path d="M 24,496 L 440,496" fill="none" stroke="black"></path>
+              <path d="M 448,512 L 464,512" fill="none" stroke="black"></path>
+              <path d="M 448,528 L 464,528" fill="none" stroke="black"></path>
+              <path d="M 24,544 L 440,544" fill="none" stroke="black"></path>
+              <polygon class="arrowhead" points="456,528 444,522.4 444,533.6" fill="black" transform="rotate(180,448,528)"></polygon>
+              <polygon class="arrowhead" points="456,320 444,314.4 444,325.6" fill="black" transform="rotate(180,448,320)"></polygon>
+              <polygon class="arrowhead" points="384,120 372,114.4 372,125.6" fill="black" transform="rotate(90,376,120)"></polygon>
+              <polygon class="arrowhead" points="344,344 332,338.4 332,349.6" fill="black" transform="rotate(270,336,344)"></polygon>
+              <polygon class="arrowhead" points="232,280 220,274.4 220,285.6" fill="black" transform="rotate(90,224,280)"></polygon>
+              <polygon class="arrowhead" points="208,344 196,338.4 196,349.6" fill="black" transform="rotate(270,200,344)"></polygon>
+              <polygon class="arrowhead" points="96,120 84,114.4 84,125.6" fill="black" transform="rotate(90,88,120)"></polygon>
+              <polygon class="arrowhead" points="56,488 44,482.4 44,493.6" fill="black" transform="rotate(90,48,488)"></polygon>
+              <g class="text">
+                <text x="216" y="36">START</text>
+                <text x="116" y="100">send</text>
+                <text x="184" y="100">ClientHello</text>
+                <text x="412" y="100">accept</text>
+                <text x="484" y="100">connection</text>
+                <text x="92" y="148">AWAITING</text>
+                <text x="380" y="148">AWAITING</text>
+                <text x="96" y="164">SERVERHELLO</text>
+                <text x="384" y="164">CLIENTHELLO</text>
+                <text x="116" y="212">recv</text>
+                <text x="184" y="212">ServerHello</text>
+                <text x="404" y="212">recv</text>
+                <text x="472" y="212">ClientHello</text>
+                <text x="528" y="212">/</text>
+                <text x="404" y="228">send</text>
+                <text x="472" y="228">ServerHello</text>
+                <text x="236" y="308">SYNCED</text>
+                <text x="396" y="356">recv</text>
+                <text x="484" y="356">ConnectionUpdate</text>
+                <text x="560" y="356">/</text>
+                <text x="396" y="372">send</text>
+                <text x="476" y="372">EpochKeyUpdate</text>
+                <text x="76" y="388">send</text>
+                <text x="228" y="388">recv</text>
+                <text x="364" y="388">recv</text>
+                <text x="104" y="404">Connection-</text>
+                <text x="268" y="404">EpochKeyUpdate</text>
+                <text x="412" y="404">ConnectionUpdate</text>
+                <text x="84" y="420">Update</text>
+                <text x="216" y="420">/</text>
+                <text x="248" y="420">apply</text>
+                <text x="360" y="420">(as</text>
+                <text x="420" y="420">responder)</text>
+                <text x="472" y="420">/</text>
+                <text x="240" y="436">pending</text>
+                <text x="300" y="436">commit</text>
+                <text x="364" y="436">drop</text>
+                <text x="416" y="436">pending</text>
+                <text x="480" y="436">commit,</text>
+                <text x="368" y="452">apply</text>
+                <text x="424" y="452">commit,</text>
+                <text x="364" y="468">send</text>
+                <text x="444" y="468">EpochKeyUpdate</text>
+                <text x="180" y="516">AWAITING</text>
+                <text x="276" y="516">EPOCHKEYUPDATE</text>
+                <text x="388" y="564">recv</text>
+                <text x="476" y="564">ConnectionUpdate</text>
+                <text x="384" y="580">(as</text>
+                <text x="444" y="580">initiator)</text>
+                <text x="496" y="580">/</text>
+                <text x="532" y="580">ignore</text>
+              </g>
+            </svg><a href="#appendix-A-3.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-initial-and-continuous-key-" class="selfRef">Initial and continuous key agreement</a>
+        </figcaption></figure>
+</div>
+<p id="appendix-A-4">The transitions that abandon an interrupted initial key agreement and return
+to START are omitted from <a href="#fig-establishment" class="auto internal xref">Figure 1</a>.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
+<p id="appendix-A-5"><a href="#fig-resumption" class="auto internal xref">Figure 2</a> shows the resumption phase (<a href="#resumption" class="auto internal xref">Section 6</a>). The Synced and
+Awaiting EpochKeyUpdate states are the same states as in
+<a href="#fig-establishment" class="auto internal xref">Figure 1</a>, and the transitions shown there remain available. The
+transition labels are listed below the diagram.<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<span id="name-resumption-2"></span><div id="fig-resumption">
+<figure id="figure-2">
+        <div id="appendix-A-6.1">
+          <div class="alignLeft art-svg artwork" id="appendix-A-6.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="416" width="488" viewBox="0 0 488 416" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,48 L 8,384" fill="none" stroke="black"></path>
+              <path d="M 56,32 L 56,64" fill="none" stroke="black"></path>
+              <path d="M 56,128 L 56,192" fill="none" stroke="black"></path>
+              <path d="M 56,256 L 56,320" fill="none" stroke="black"></path>
+              <path d="M 80,72 L 80,120" fill="none" stroke="black"></path>
+              <path d="M 80,200 L 80,248" fill="none" stroke="black"></path>
+              <path d="M 80,328 L 80,384" fill="none" stroke="black"></path>
+              <path d="M 248,200 L 248,248" fill="none" stroke="black"></path>
+              <path d="M 368,32 L 368,64" fill="none" stroke="black"></path>
+              <path d="M 368,128 L 368,192" fill="none" stroke="black"></path>
+              <path d="M 368,256 L 368,320" fill="none" stroke="black"></path>
+              <path d="M 392,144 L 392,176" fill="none" stroke="black"></path>
+              <path d="M 392,288 L 392,304" fill="none" stroke="black"></path>
+              <path d="M 448,48 L 448,272" fill="none" stroke="black"></path>
+              <path d="M 56,32 L 368,32" fill="none" stroke="black"></path>
+              <path d="M 8,48 L 48,48" fill="none" stroke="black"></path>
+              <path d="M 376,48 L 448,48" fill="none" stroke="black"></path>
+              <path d="M 56,64 L 368,64" fill="none" stroke="black"></path>
+              <path d="M 56,128 L 368,128" fill="none" stroke="black"></path>
+              <path d="M 376,144 L 392,144" fill="none" stroke="black"></path>
+              <path d="M 376,176 L 392,176" fill="none" stroke="black"></path>
+              <path d="M 56,192 L 368,192" fill="none" stroke="black"></path>
+              <path d="M 56,256 L 368,256" fill="none" stroke="black"></path>
+              <path d="M 376,272 L 448,272" fill="none" stroke="black"></path>
+              <path d="M 376,288 L 392,288" fill="none" stroke="black"></path>
+              <path d="M 376,304 L 392,304" fill="none" stroke="black"></path>
+              <path d="M 56,320 L 368,320" fill="none" stroke="black"></path>
+              <path d="M 8,384 L 80,384" fill="none" stroke="black"></path>
+              <polygon class="arrowhead" points="384,304 372,298.4 372,309.6" fill="black" transform="rotate(180,376,304)"></polygon>
+              <polygon class="arrowhead" points="384,272 372,266.4 372,277.6" fill="black" transform="rotate(180,376,272)"></polygon>
+              <polygon class="arrowhead" points="384,176 372,170.4 372,181.6" fill="black" transform="rotate(180,376,176)"></polygon>
+              <polygon class="arrowhead" points="256,200 244,194.4 244,205.6" fill="black" transform="rotate(270,248,200)"></polygon>
+              <polygon class="arrowhead" points="88,248 76,242.4 76,253.6" fill="black" transform="rotate(90,80,248)"></polygon>
+              <polygon class="arrowhead" points="88,120 76,114.4 76,125.6" fill="black" transform="rotate(90,80,120)"></polygon>
+              <polygon class="arrowhead" points="56,48 44,42.4 44,53.6" fill="black" transform="rotate(0,48,48)"></polygon>
+              <g class="text">
+                <text x="212" y="52">SYNCED</text>
+                <text x="104" y="100">(1)</text>
+                <text x="156" y="164">AWAITING</text>
+                <text x="252" y="164">EPOCHKEYUPDATE</text>
+                <text x="416" y="164">(1)</text>
+                <text x="472" y="164">(2)</text>
+                <text x="104" y="228">(2)</text>
+                <text x="272" y="228">(3)</text>
+                <text x="140" y="292">AWAITING</text>
+                <text x="252" y="292">RESUMPTIONRESPONSE</text>
+                <text x="420" y="308">(4),</text>
+                <text x="456" y="308">(6)</text>
+                <text x="104" y="356">(5)</text>
+              </g>
+            </svg><a href="#appendix-A-6.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-resumption-2" class="selfRef">Resumption</a>
+        </figcaption></figure>
+</div>
+<span class="break"></span><dl class="dlParallel" id="appendix-A-7">
+        <dt id="appendix-A-7.1">(1)</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-7.2">
+          <p id="appendix-A-7.2.1">recv ResumptionRequest / process the commit as described in <a href="#resumption" class="auto internal xref">Section 6</a>,
+send ResumptionResponse<a href="#appendix-A-7.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-A-7.3">(2)</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-7.4">
+          <p id="appendix-A-7.4.1">connection interrupted / send ResumptionRequest containing the pending
+commit, or a fresh commit if there is none<a href="#appendix-A-7.4.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-A-7.5">(3)</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-7.6">
+          <p id="appendix-A-7.6.1">recv ResumptionRequest / process the commit as described in <a href="#resumption" class="auto internal xref">Section 6</a>,
+send ResumptionResponse<a href="#appendix-A-7.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-A-7.7">(4)</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-7.8">
+          <p id="appendix-A-7.8.1">recv conflicting ResumptionRequest (as initial initiator) / ignore<a href="#appendix-A-7.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-A-7.9">(5)</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-7.10">
+          <p id="appendix-A-7.10.1">recv ResumptionResponse / apply pending commit, apply commit in the
+ResumptionResponse, send EpochKeyUpdate<a href="#appendix-A-7.10.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+<dt id="appendix-A-7.11">(6)</dt>
+        <dd style="margin-left: 1.5em" id="appendix-A-7.12">
+          <p id="appendix-A-7.12.1">connection interrupted / retransmit ResumptionRequest containing the pending
+commit<a href="#appendix-A-7.12.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-B">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-B-1">TODO acknowledge.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="contributors">
+<section id="appendix-C">
+      <h2 id="name-contributors">
+<a href="#name-contributors" class="section-name selfRef">Contributors</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Russ Housley</span></div>
+<div dir="auto" class="left"><span class="org">Vigil Security</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:housley@vigilsec.com" class="email">housley@vigilsec.com</a>
+</div>
+</address>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-D">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Konrad Kohbrok</span></div>
+<div dir="auto" class="left"><span class="org">Phoenix R&amp;D</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:konrad@ratchet.ing" class="email">konrad@ratchet.ing</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Raphael Robert</span></div>
+<div dir="auto" class="left"><span class="org">Phoenix R&amp;D</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:ietf@raphaelrobert.com" class="email">ietf@raphaelrobert.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
