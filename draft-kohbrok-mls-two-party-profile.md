@@ -316,7 +316,8 @@ requirements.
 In addition, a party in the Synced or Awaiting EpochKeyUpdate state may receive
 a ResumptionRequest at any time. Its processing is defined in {{resumption}}.
 
-OPEN QUESTION: We may want to allow inclusion of proposals in the future.
+OPEN QUESTION: How should we constrain the inclusion of commits? Some proposal
+types like Re-Init would need to be integrated into the state machine.
 
 # Resumption {#resumption}
 
