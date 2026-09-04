@@ -69,11 +69,11 @@ available when the profile is used with a suitable post-quantum cipher suite,
 such as one defined in {{I-D.ietf-mls-pq-ciphersuites}}. This is the case with
 the key exchange components for many secure channel protocols today.
 
-TODO: For now, this document specifies a simple two party profile based on
-vanilla MLS that assumes synchronous communication and a reliable transport. In
-the future, we should explore the asynchronous case and add a more specialized
-version that trims unnecessary things like signatures in key update messages,
-etc.
+TODO: For now, this document specifies a simple two party profile that assumes
+synchronous communication and a reliable transport. Future versions of this
+document should include versions of the profile that enable asynchronous
+communication and work over unreliable network links.
+
 
 # Conventions and Definitions
 
