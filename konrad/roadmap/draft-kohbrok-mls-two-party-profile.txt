@@ -5,7 +5,7 @@
 Messaging Layer Security                                      K. Kohbrok
 Internet-Draft                                                 R. Robert
 Intended status: Informational                               Phoenix R&D
-Expires: 31 January 2027                                    30 July 2026
+Expires: 8 March 2027                                   4 September 2026
 
 
                       A two-party profile for MLS
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 January 2027.
+   This Internet-Draft will expire on 8 March 2027.
 
 Copyright Notice
 
@@ -102,10 +102,10 @@ Table of Contents
    exchange components for many secure channel protocols today.
 
    TODO: For now, this document specifies a simple two party profile
-   based on vanilla MLS that assumes synchronous communication and a
-   reliable transport.  In the future, we should explore the
-   asynchronous case and add a more specialized version that trims
-   unnecessary things like signatures in key update messages, etc.
+   that assumes synchronous communication and a reliable transport.
+   Future versions of this document should include versions of the
+   profile that enable asynchronous communication and work over
+   unreliable network links.
 
 2.  Conventions and Definitions
 
