@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-03T01:53:16.171316+00:00",
+  "timestamp": "2026-09-06T01:43:04.038720+00:00",
   "repo": "kkohbrok/draft-kohbrok-mls-two-party-profile",
   "labels": [
     {
@@ -50,5 +50,32 @@
     }
   ],
   "issues": [],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOQ-VEw88AAAABCP4FSQ",
+      "title": "clarify todo in intro",
+      "url": "https://github.com/kkohbrok/draft-kohbrok-mls-two-party-profile/pull/1",
+      "state": "OPEN",
+      "author": "kkohbrok",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-09-04T19:15:55Z",
+      "updatedAt": "2026-09-04T19:15:55Z",
+      "baseRepository": "kkohbrok/draft-kohbrok-mls-two-party-profile",
+      "baseRefName": "main",
+      "baseRefOid": "4a51a2e661bc5d5e7e92509c7e9757058d24ab32",
+      "headRepository": "kkohbrok/draft-kohbrok-mls-two-party-profile",
+      "headRefName": "konrad/roadmap",
+      "headRefOid": "01dc7d38580db513b31511f6d3e2c5ad3bca545a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
